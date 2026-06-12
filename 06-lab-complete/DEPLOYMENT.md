@@ -2,84 +2,56 @@
 
 ## Public URL
 
-TODO: Paste the public service URL from Railway or Render here.
+TODO: Paste Railway public URL here.
 
 Example:
 
 ```text
-https://your-agent.railway.app
+https://your-chatbot.railway.app
 ```
 
 ## Platform
 
-TODO: Railway or Render.
+Railway
 
-## Test Commands
+## Required Environment Variables
 
-Replace `<PUBLIC_URL>` and `<AGENT_API_KEY>` with the real values from the deployed service.
-
-### Health Check
-
-```bash
-curl <PUBLIC_URL>/health
-```
-
-Expected result: HTTP 200 with JSON containing `"status": "ok"`.
-
-### Readiness Check
-
-```bash
-curl <PUBLIC_URL>/ready
-```
-
-Expected result: HTTP 200 with JSON containing `"ready": true`.
-
-### Authentication Required
-
-```bash
-curl -X POST <PUBLIC_URL>/ask \
-  -H "Content-Type: application/json" \
-  -d '{"question": "Hello"}'
-```
-
-Expected result: HTTP 401 because `X-API-Key` is missing.
-
-### API Test With Authentication
-
-```bash
-curl -X POST <PUBLIC_URL>/ask \
-  -H "X-API-Key: <AGENT_API_KEY>" \
-  -H "Content-Type: application/json" \
-  -d '{"question": "What is deployment?"}'
-```
-
-Expected result: HTTP 200 with an agent answer.
-
-### Metrics
-
-```bash
-curl <PUBLIC_URL>/metrics \
-  -H "X-API-Key: <AGENT_API_KEY>"
-```
-
-Expected result: HTTP 200 with uptime, request count, error count, and budget usage.
-
-## Environment Variables Set
-
+- `GEMINI_API_KEY`: Gemini API key from Google AI Studio
+- `LLM_MODEL=gemini-3.1-flash-lite`
 - `ENVIRONMENT=production`
-- `APP_VERSION=1.0.0`
-- `OPENAI_API_KEY` optional for this mock lab
-- `AGENT_API_KEY`
-- `JWT_SECRET`
-- `DAILY_BUDGET_USD=10.0`
-- `RATE_LIMIT_PER_MINUTE=10`
-- `PORT` provided by the cloud platform
+- `APP_NAME=Gemini Chatbot`
+- `PORT`: provided automatically by Railway
+
+## Railway Commands
+
+```bash
+railway login
+railway init
+railway variables set GEMINI_API_KEY=your-gemini-api-key
+railway variables set LLM_MODEL=gemini-3.1-flash-lite
+railway variables set ENVIRONMENT=production
+railway up
+railway domain
+```
+
+## Health Check
+
+Railway health check path:
+
+```text
+/_stcore/health
+```
+
+Expected result: HTTP 200.
+
+## Test
+
+Open the Railway public URL in a browser, type a message in the chat input, and confirm Gemini returns an answer.
 
 ## Screenshots
 
 TODO: Add screenshots if required by the instructor.
 
-- Deployment dashboard
-- Service running
-- Health check result
-- Authenticated `/ask` result
+- Railway variables
+- Successful deployment
+- Chatbot running

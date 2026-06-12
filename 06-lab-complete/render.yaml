@@ -1,23 +1,17 @@
 services:
   - type: web
-    name: ai-agent-production
+    name: gemini-streamlit-chatbot
     runtime: docker
     region: singapore
     plan: starter
-    healthCheckPath: /health
+    healthCheckPath: /_stcore/health
     autoDeploy: true
     envVars:
       - key: ENVIRONMENT
         value: production
       - key: APP_VERSION
         value: "1.0.0"
-      - key: OPENAI_API_KEY
+      - key: GEMINI_API_KEY
         sync: false
-      - key: AGENT_API_KEY
-        generateValue: true
-      - key: JWT_SECRET
-        generateValue: true
-      - key: DAILY_BUDGET_USD
-        value: "10.0"
-      - key: RATE_LIMIT_PER_MINUTE
-        value: "10"
+      - key: LLM_MODEL
+        value: gemini-3.1-flash-lite
